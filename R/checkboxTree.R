@@ -168,9 +168,13 @@ checkboxTreeInput <- function(inputId,
   )
 }
 
-#' <Add Title>
+#' Update a checkbox tree
 #'
-#' <Add Description>
+#' @description Update the selected nodes of a checkbox tree.
+#'
+#' @param session the Shiny \code{session} object
+#' @param inputId the id of the checkbox tree to update
+#' @param checked a list of selected nodes identified by their value
 #'
 #' @export
 updateCheckboxTreeInput <- function(session, inputId, checked){

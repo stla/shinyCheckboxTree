@@ -2,10 +2,17 @@
 % Please edit documentation in R/checkboxTree.R
 \name{updateCheckboxTreeInput}
 \alias{updateCheckboxTreeInput}
-\title{<Add Title>}
+\title{Update a checkbox tree}
 \usage{
 updateCheckboxTreeInput(session, inputId, checked)
 }
+\arguments{
+\item{session}{the Shiny \code{session} object}
+
+\item{inputId}{the id of the checkbox tree to update}
+
+\item{checked}{a list of selected nodes identified by their value}
+}
 \description{
-<Add Description>
+Update the selected nodes of a checkbox tree.
 }
