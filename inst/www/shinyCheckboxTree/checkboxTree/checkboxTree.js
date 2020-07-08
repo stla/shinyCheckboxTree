@@ -2698,10 +2698,14 @@ var Widget = /*#__PURE__*/function (_React$PureComponent) {
         checkModel: this.props.checkModel,
         checked: this.state.checked,
         expanded: this.state.expanded,
-        onCheck: function onCheck(checked) {
+        onCheck: function onCheck(checked, targetNode) {
           console.log(checked);
 
-          _this3.props.setValue(checked); //this.setState({ checked });
+          if (_this3.props.single) {
+            _this3.props.setValue([targetNode.value]);
+          } else {
+            _this3.props.setValue(checked);
+          } //this.setState({ checked });
 
         },
         onExpand: function onExpand(expanded) {
@@ -2729,9 +2733,14 @@ var Input = function Input(_ref) {
   //console.log(extractValues(configuration.nodes));
   //setValue(["xx"]);
 
+  if (configuration.single && value.length > 1) {
+    value = value[0];
+  }
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Widget, {
     nodes: configuration.nodes,
     values: configuration.values,
+    single: configuration.single,
     checkModel: configuration.checkModel,
     checked: value,
     setValue: setValue,

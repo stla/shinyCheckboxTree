@@ -62,9 +62,13 @@ class Widget extends React.PureComponent {
                 checkModel={this.props.checkModel}
                 checked={this.state.checked}
                 expanded={this.state.expanded}
-                onCheck={checked => {
+                onCheck={(checked, targetNode) => {
                   console.log(checked);
-                  this.props.setValue(checked);
+                  if(this.props.single){
+                    this.props.setValue([targetNode.value]);
+                  }else{
+                    this.props.setValue(checked);
+                  }
                   //this.setState({ checked });
                 }}
                 onExpand={expanded => this.setState({ expanded })}
@@ -83,10 +87,14 @@ const Input = ({ configuration, value, setValue }) => {
   //console.log("checked ", checked);
   //console.log(extractValues(configuration.nodes));
   //setValue(["xx"]);
+  if(configuration.single && value.length > 1){
+    value = value[0];
+  }
   return (
     <Widget
       nodes={configuration.nodes}
       values={configuration.values}
+      single={configuration.single}
       checkModel={configuration.checkModel}
       checked={value}
       setValue={setValue}

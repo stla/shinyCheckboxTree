@@ -38,6 +38,22 @@ extractValues <- function(nodes){
   values
 }
 
+extractLeavesValues <- function(nodes){
+  values <- NULL
+  sapply(nodes, function(node){
+    if(!is.element("children", names(node))){
+      values <<- c(values, node[["value"]])
+    }
+  })
+  sapply(nodes, function(node){
+    if(is.element("children", names(node))){
+      values <<- c(values, extractLeavesValues(node[["children"]]))
+    }
+  })
+  values
+}
+
+
 isValidCheckedList <- function(checked){
   valid <- is.list(checked) && length(names(checked)) == 0L
   if(valid && length(checked)){
@@ -71,20 +87,27 @@ sortNodes <- function(nodes){
 checkboxTreeInput <- function(inputId,
                               nodes,
                               sort = FALSE,
+                              single = FALSE,
                               checkModel = "leaf",
                               checked = list(),
                               onlyLeafCheckboxes = FALSE,
                               showExpandAll = FALSE) {
   # TODO: setValue(configuration.checked)
   stopifnot(isValidNodeList(nodes))
+  stopifnot(is.logical(sort))
   if(sort) nodes <- sortNodes(nodes)
-  values <- extractValues(nodes)
+  stopifnot(is.logical(single))
+  values <- if(single) extractLeavesValues(nodes) else extractValues(nodes)
   if(anyDuplicated(values)){
     stop("There are duplicated values in the `nodes` list.", .call = TRUE)
   }
   checkModel <- match.arg(checkModel, c("leaf", "all"))
   stopifnot(isValidCheckedList(checked))
   checked <- intersect(checked, as.list(values))
+  if(single && length(checked) > 1){
+    stop("The `checked` list contains more than one element while `single=TRUE`",
+         .call = TRUE)
+  }
   stopifnot(is.logical(onlyLeafCheckboxes))
   stopifnot(is.logical(showExpandAll))
   reactR::createReactShinyInput(
@@ -114,9 +137,10 @@ checkboxTreeInput <- function(inputId,
     configuration = list(
       nodes = nodes,
       values = values,
+      single = single,
       checkModel = checkModel,
 #      checked = checked,
-      onlyLeafCheckboxes = onlyLeafCheckboxes,
+      onlyLeafCheckboxes = single || onlyLeafCheckboxes,
       showExpandAll = showExpandAll
     ),
     container = htmltools::tags$div

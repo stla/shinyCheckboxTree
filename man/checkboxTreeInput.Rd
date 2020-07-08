@@ -8,6 +8,7 @@ checkboxTreeInput(
   inputId,
   nodes,
   sort = FALSE,
+  single = FALSE,
   checkModel = "leaf",
   checked = list(),
   onlyLeafCheckboxes = FALSE,
