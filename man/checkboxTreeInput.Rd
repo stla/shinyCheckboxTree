@@ -2,7 +2,7 @@
 % Please edit documentation in R/checkboxTree.R
 \name{checkboxTreeInput}
 \alias{checkboxTreeInput}
-\title{<Add Title>}
+\title{Create a checkbox tree}
 \usage{
 checkboxTreeInput(
   inputId,
@@ -15,6 +15,36 @@ checkboxTreeInput(
   showExpandAll = FALSE
 )
 }
+\arguments{
+\item{inputId}{the input slot that will be used to access the value}
+
+\item{nodes}{a list of nodes; each node is a named list with the following
+fields:
+\describe{
+  \item{\code{label}}{node label - required}
+  \item{\code{value}}{the value associated to the node - required}
+  \item{\code{children}}{the children of the node, i.e. a list of nodes}
+  \item{\code{className}}{a class name to add to the node}
+  \item{\code{disabled}}{logical, whether to disable the node}
+  \item{\code{showCheckbox}}{logical, whether the node should show a checkbox}
+  \item{\code{title}}{a custom \code{title} attribute for the node}
+}}
+
+\item{sort}{logical, whether to sort the nodes by their label}
+
+\item{single}{logical; if \code{TRUE}, only one node can be selected}
+
+\item{checkModel}{\code{"leaf"} or \code{"all"}, specifies which checked
+nodes should be included in the value}
+
+\item{checked}{a list of initially checked nodes, identified by their value}
+
+\item{onlyLeafCheckboxes}{logical, whether checboxes should be shown only
+for the leaves}
+
+\item{showExpandAll}{logical; if \code{TRUE}, buttons for expanding and
+collapsing all parent nodes will appear in the tree}
+}
 \description{
-<Add Description>
+This creates a checkbox tree in the Shiny UI.
 }

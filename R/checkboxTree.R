@@ -75,9 +75,31 @@ sortNodes <- function(nodes){
   })
 }
 
-#' <Add Title>
+#' Create a checkbox tree
 #'
-#' <Add Description>
+#' @description This creates a checkbox tree in the Shiny UI.
+#'
+#' @param inputId the input slot that will be used to access the value
+#' @param nodes a list of nodes; each node is a named list with the following
+#' fields:
+#' \describe{
+#'   \item{\code{label}}{node label - required}
+#'   \item{\code{value}}{the value associated to the node - required}
+#'   \item{\code{children}}{the children of the node, i.e. a list of nodes}
+#'   \item{\code{className}}{a class name to add to the node}
+#'   \item{\code{disabled}}{logical, whether to disable the node}
+#'   \item{\code{showCheckbox}}{logical, whether the node should show a checkbox}
+#'   \item{\code{title}}{a custom \code{title} attribute for the node}
+#' }
+#' @param sort logical, whether to sort the nodes by their label
+#' @param single logical; if \code{TRUE}, only one node can be selected
+#' @param checkModel \code{"leaf"} or \code{"all"}, specifies which checked
+#' nodes should be included in the value
+#' @param checked a list of initially checked nodes, identified by their value
+#' @param onlyLeafCheckboxes logical, whether checboxes should be shown only
+#' for the leaves
+#' @param showExpandAll logical; if \code{TRUE}, buttons for expanding and
+#' collapsing all parent nodes will appear in the tree
 #'
 #' @importFrom shiny restoreInput
 #' @importFrom reactR createReactShinyInput
@@ -92,7 +114,6 @@ checkboxTreeInput <- function(inputId,
                               checked = list(),
                               onlyLeafCheckboxes = FALSE,
                               showExpandAll = FALSE) {
-  # TODO: setValue(configuration.checked)
   stopifnot(isValidNodeList(nodes))
   stopifnot(is.logical(sort))
   if(sort) nodes <- sortNodes(nodes)
