@@ -2,7 +2,7 @@
 % Please edit documentation in R/checkboxTree.R
 \name{checkboxTreeInput}
 \alias{checkboxTreeInput}
-\title{Create a checkbox tree}
+\title{Checkbox tree}
 \usage{
 checkboxTreeInput(
   inputId,
@@ -39,7 +39,7 @@ nodes should be included in the value}
 
 \item{checked}{a list of initially checked nodes, identified by their value}
 
-\item{onlyLeafCheckboxes}{logical, whether checboxes should be shown only
+\item{onlyLeafCheckboxes}{logical, whether checkboxes should be shown only
 for the leaves}
 
 \item{showExpandAll}{logical; if \code{TRUE}, buttons for expanding and
@@ -47,4 +47,75 @@ collapsing all parent nodes will appear in the tree}
 }
 \description{
 This creates a checkbox tree in the Shiny UI.
+}
+\examples{
+if(interactive()){
+
+# make the nodes list from a vector of file paths
+makeNodes <- function(leaves){
+  dfs <- lapply(strsplit(leaves, "/"), function(s){
+    item <-
+      Reduce(function(a,b) paste0(a,"/",b), s[-1], s[1], accumulate = TRUE)
+    data.frame(
+      item = item,
+      parent = c("root", item[-length(item)]),
+      stringsAsFactors = FALSE
+    )
+  })
+  dat <- dfs[[1]]
+  for(i in 2:length(dfs)){
+    dat <- merge(dat, dfs[[i]], all = TRUE)
+  }
+  f <- function(parent){
+    i <- match(parent, dat$item)
+    item <- dat$item[i]
+    children <- dat$item[dat$parent==item]
+    label <- tail(strsplit(item, "/")[[1]], 1)
+    if(length(children)){
+      list(
+        label = label,
+        value = item,
+        children = lapply(children, f)
+      )
+    }else{
+      list(label = label, value = item)
+    }
+  }
+  lapply(dat$item[dat$parent == "root"], f)
+}
+
+folder <-
+  list.files(system.file("www", "shared", package = "shiny"), recursive = TRUE)
+nodes <- makeNodes(folder)
+
+
+library(shiny)
+library(shinyCheckboxTree)
+
+ui <- fluidPage(
+  tags$head(
+    tags$style(HTML(".react-checkbox-tree { font-size: 13px; }"))
+  ),
+  br(),
+  fluidRow(
+    column(
+      6,
+      checkboxTreeInput("tree", nodes = nodes)
+    ),
+    column(
+      6,
+      verbatimTextOutput("checked")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  output[["checked"]] <- renderPrint({
+    cat(input[["tree"]], sep = "\n")
+  })
+}
+
+shinyApp(ui, server)
+
+}
 }
