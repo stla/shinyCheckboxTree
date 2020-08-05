@@ -1,14 +1,18 @@
 Package: shinyCheckboxTree
-Title: What the Package Does (One Line, Title Case)
+Title: A Checkbox Tree Widget for 'Shiny'
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "First",
-           family = "Last",
+Authors@R: c(
+    person(given = "Stéphane",
+           family = "Laurent",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: What license it uses
+           email = "laurent_step@outlook.fr"),
+    person(given = "Jake",
+           family = "Zatecky",
+           role = c("ctb", "cph"),
+           comment = "'react-checkbox-tree' library (https://github.com/jakezatecky/react-checkbox-tree)")
+    )
+Description: Provides a checkbox tree widget for a Shiny UI. This is a wrapper of the JavaScript library 'react-checkbox-tree'.
+License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 

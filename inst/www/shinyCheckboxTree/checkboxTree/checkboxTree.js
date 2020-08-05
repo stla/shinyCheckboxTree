@@ -86,111 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/css-loader/dist/runtime/api.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-// eslint-disable-next-line func-names
-
-module.exports = function (useSourceMap) {
-  var list = []; // return the list of modules as css string
-
-  list.toString = function toString() {
-    return this.map(function (item) {
-      var content = cssWithMappingToString(item, useSourceMap);
-
-      if (item[2]) {
-        return "@media ".concat(item[2], " {").concat(content, "}");
-      }
-
-      return content;
-    }).join('');
-  }; // import a list of modules into the list
-  // eslint-disable-next-line func-names
-
-
-  list.i = function (modules, mediaQuery, dedupe) {
-    if (typeof modules === 'string') {
-      // eslint-disable-next-line no-param-reassign
-      modules = [[null, modules, '']];
-    }
-
-    var alreadyImportedModules = {};
-
-    if (dedupe) {
-      for (var i = 0; i < this.length; i++) {
-        // eslint-disable-next-line prefer-destructuring
-        var id = this[i][0];
-
-        if (id != null) {
-          alreadyImportedModules[id] = true;
-        }
-      }
-    }
-
-    for (var _i = 0; _i < modules.length; _i++) {
-      var item = [].concat(modules[_i]);
-
-      if (dedupe && alreadyImportedModules[item[0]]) {
-        // eslint-disable-next-line no-continue
-        continue;
-      }
-
-      if (mediaQuery) {
-        if (!item[2]) {
-          item[2] = mediaQuery;
-        } else {
-          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
-        }
-      }
-
-      list.push(item);
-    }
-  };
-
-  return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-  var content = item[1] || ''; // eslint-disable-next-line prefer-destructuring
-
-  var cssMapping = item[3];
-
-  if (!cssMapping) {
-    return content;
-  }
-
-  if (useSourceMap && typeof btoa === 'function') {
-    var sourceMapping = toComment(cssMapping);
-    var sourceURLs = cssMapping.sources.map(function (source) {
-      return "/*# sourceURL=".concat(cssMapping.sourceRoot || '').concat(source, " */");
-    });
-    return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-  }
-
-  return [content].join('\n');
-} // Adapted from convert-source-map (MIT)
-
-
-function toComment(sourceMap) {
-  // eslint-disable-next-line no-undef
-  var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-  var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
-  return "/*# ".concat(data, " */");
-}
-
-/***/ }),
-
 /***/ "./node_modules/react-checkbox-tree/lib/index.browser.js":
 /*!***************************************************************!*\
   !*** ./node_modules/react-checkbox-tree/lib/index.browser.js ***!
@@ -2513,24 +2408,6 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ "./node_modules/react-checkbox-tree/lib/react-checkbox-tree.css":
-/*!**********************************************************************!*\
-  !*** ./node_modules/react-checkbox-tree/lib/react-checkbox-tree.css ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".react-checkbox-tree {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n  font-size: 16px;\n}\n\n.react-checkbox-tree > ol {\n  -webkit-box-flex: 1;\n      -ms-flex: 1 1 auto;\n          flex: 1 1 auto;\n}\n\n.react-checkbox-tree ol {\n  margin: 0;\n  padding-left: 0;\n  list-style-type: none;\n}\n\n.react-checkbox-tree ol ol {\n  padding-left: 24px;\n}\n\n.react-checkbox-tree button {\n  line-height: normal;\n  color: inherit;\n}\n\n.react-checkbox-tree button:focus {\n  outline: none;\n}\n\n.react-checkbox-tree button:disabled {\n  cursor: not-allowed;\n}\n\n.react-checkbox-tree .rct-bare-label {\n  cursor: default;\n}\n\n.react-checkbox-tree label {\n  margin-bottom: 0;\n  cursor: pointer;\n}\n\n.react-checkbox-tree label:hover {\n  background: rgba(51, 51, 204, 0.1);\n}\n\n.react-checkbox-tree label:active {\n  background: rgba(51, 51, 204, 0.15);\n}\n\n.react-checkbox-tree:not(.rct-native-display) input {\n  display: none;\n}\n\n.react-checkbox-tree.rct-native-display input {\n  margin: 0 5px;\n}\n\n.react-checkbox-tree .rct-icon {\n  display: inline-block;\n  text-align: center;\n  text-rendering: auto;\n  font-family: \"Font Awesome 5 Free\", \"FontAwesome\", sans-serif;\n  font-weight: normal;\n  font-style: normal;\n  font-variant: normal;\n}\n\n.rct-disabled > .rct-text > label {\n  opacity: .75;\n  cursor: not-allowed;\n}\n\n.rct-disabled > .rct-text > label:hover {\n  background: transparent;\n}\n\n.rct-disabled > .rct-text > label:active {\n  background: transparent;\n}\n\n.rct-text {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n\n.rct-options {\n  -webkit-box-flex: 0;\n      -ms-flex: 0 0 auto;\n          flex: 0 0 auto;\n  margin-left: .5rem;\n  text-align: right;\n}\n\n.rct-option {\n  opacity: .75;\n  border: 0;\n  background: none;\n  cursor: pointer;\n  padding: 0 4px;\n  font-size: 18px;\n}\n\n.rct-option:hover {\n  opacity: 1;\n}\n\n.rct-option + .rct-option {\n  margin-left: 2px;\n}\n\n.rct-collapse,\n.rct-checkbox,\n.rct-node-icon {\n  padding: 0 5px;\n}\n\n.rct-collapse *,\n.rct-checkbox *,\n.rct-node-icon * {\n  display: inline-block;\n  margin: 0;\n  width: 14px;\n}\n\n.rct-collapse {\n  border: 0;\n  background: none;\n  line-height: normal;\n  color: inherit;\n  font-size: 12px;\n}\n\n.rct-collapse.rct-collapse-btn {\n  cursor: pointer;\n}\n\n.rct-collapse > .rct-icon-expand-close {\n  opacity: .5;\n}\n\n.rct-collapse > .rct-icon-expand-close:hover {\n  opacity: 1;\n}\n\n.rct-native-display .rct-checkbox {\n  display: none;\n}\n\n.rct-node-clickable {\n  cursor: pointer;\n}\n\n.rct-node-clickable:hover {\n  background: rgba(51, 51, 204, 0.1);\n}\n\n.rct-node-clickable:focus {\n  outline: 0;\n  background: rgba(51, 51, 204, 0.2);\n}\n\n.rct-node-icon {\n  color: #33c;\n}\n\n.rct-title {\n  padding: 0 5px;\n}\n\n.rct-icons-fa4 .rct-icon-expand-close::before {\n  content: \"\\f054\";\n}\n\n.rct-icons-fa4 .rct-icon-expand-open::before {\n  content: \"\\f078\";\n}\n\n.rct-icons-fa4 .rct-icon-uncheck::before {\n  content: \"\\f096\";\n}\n\n.rct-icons-fa4 .rct-icon-check::before {\n  content: \"\\f046\";\n}\n\n.rct-icons-fa4 .rct-icon-half-check::before {\n  opacity: .5;\n  content: \"\\f046\";\n}\n\n.rct-icons-fa4 .rct-icon-leaf::before {\n  content: \"\\f016\";\n}\n\n.rct-icons-fa4 .rct-icon-parent-open::before {\n  content: \"\\f115\";\n}\n\n.rct-icons-fa4 .rct-icon-parent-close::before {\n  content: \"\\f114\";\n}\n\n.rct-icons-fa4 .rct-icon-expand-all::before {\n  content: \"\\f0fe\";\n}\n\n.rct-icons-fa4 .rct-icon-collapse-all::before {\n  content: \"\\f146\";\n}\n\n.rct-icons-fa5 .rct-icon-expand-close::before {\n  font-weight: 900;\n  content: \"\\f054\";\n}\n\n.rct-icons-fa5 .rct-icon-expand-open::before {\n  font-weight: 900;\n  content: \"\\f078\";\n}\n\n.rct-icons-fa5 .rct-icon-uncheck::before {\n  content: \"\\f0c8\";\n}\n\n.rct-icons-fa5 .rct-icon-check::before {\n  content: \"\\f14a\";\n}\n\n.rct-icons-fa5 .rct-icon-half-check::before {\n  opacity: .5;\n  content: \"\\f14a\";\n}\n\n.rct-icons-fa5 .rct-icon-leaf::before {\n  content: \"\\f15b\";\n}\n\n.rct-icons-fa5 .rct-icon-parent-open::before {\n  content: \"\\f07c\";\n}\n\n.rct-icons-fa5 .rct-icon-parent-close::before {\n  content: \"\\f07b\";\n}\n\n.rct-icons-fa5 .rct-icon-expand-all::before {\n  content: \"\\f0fe\";\n}\n\n.rct-icons-fa5 .rct-icon-collapse-all::before {\n  content: \"\\f146\";\n}\n", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "./node_modules/webpack/buildin/module.js":
 /*!***********************************!*\
   !*** (webpack)/buildin/module.js ***!
@@ -2578,10 +2455,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var reactR__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(reactR__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_checkbox_tree_lib_react_checkbox_tree_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-checkbox-tree/lib/react-checkbox-tree.css */ "./node_modules/react-checkbox-tree/lib/react-checkbox-tree.css");
-/* harmony import */ var react_checkbox_tree_lib_react_checkbox_tree_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_checkbox_tree_lib_react_checkbox_tree_css__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_checkbox_tree__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-checkbox-tree */ "./node_modules/react-checkbox-tree/lib/index.browser.js");
-/* harmony import */ var react_checkbox_tree__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_checkbox_tree__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_checkbox_tree__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-checkbox-tree */ "./node_modules/react-checkbox-tree/lib/index.browser.js");
+/* harmony import */ var react_checkbox_tree__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_checkbox_tree__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -2617,7 +2492,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
-
+ //import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 
 
 
@@ -2658,16 +2533,10 @@ var Widget = /*#__PURE__*/function (_React$PureComponent) {
     value: function componentDidUpdate(prevProps, prevState) {
       var _this2 = this;
 
-      //    console.log("prevProps", prevProps.checked);
-      //    console.log("prevState", prevState.checked);
-      //    console.log("this.props", this.props.checked);
       var nchecked = this.props.checked.length;
       var diff = nchecked !== prevProps.checked.length || nchecked !== new Set([].concat(_toConsumableArray(this.props.checked), _toConsumableArray(prevProps.checked))).size;
 
       if (diff) {
-        console.log("setState");
-        console.log("prevProps", prevProps.checked);
-        console.log("this.props", this.props.checked);
         var checked = this.props.values.filter(function (x) {
           return _this2.props.checked.includes(x);
         });
@@ -2675,38 +2544,25 @@ var Widget = /*#__PURE__*/function (_React$PureComponent) {
           checked: checked
         });
         this.props.setValue(checked);
-      } //    if(prevState.checked !== this.state.checked){
-      //      console.log("ZZZ");
-      //    }
-      // const { checked } = this.props
-      // if (nextProps.checked !== checked) {
-      //   this.setState({checked: nextProps.checked})
-      //  if (show) {
-      //   getMoreData().then(resp => this.setState({ data: resp.data }))
-      //  }
-      // }
-
+      }
     }
   }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_checkbox_tree__WEBPACK_IMPORTED_MODULE_3___default.a, {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_checkbox_tree__WEBPACK_IMPORTED_MODULE_2___default.a, {
         iconsClass: "fa5",
         nodes: this.props.nodes,
         checkModel: this.props.checkModel,
         checked: this.state.checked,
         expanded: this.state.expanded,
         onCheck: function onCheck(checked, targetNode) {
-          console.log(checked);
-
           if (_this3.props.single) {
             _this3.props.setValue([targetNode.value]);
           } else {
             _this3.props.setValue(checked);
-          } //this.setState({ checked });
-
+          }
         },
         onExpand: function onExpand(expanded) {
           return _this3.setState({
@@ -2726,12 +2582,6 @@ var Input = function Input(_ref) {
   var configuration = _ref.configuration,
       value = _ref.value,
       setValue = _ref.setValue;
-  console.log("xxx");
-  console.log(configuration);
-  console.log(value); //const checked = configuration.values.filter(x => value.includes(x));
-  //console.log("checked ", checked);
-  //console.log(extractValues(configuration.nodes));
-  //setValue(["xx"]);
 
   if (configuration.single && value.length > 1) {
     value = value[0];
