@@ -3,16 +3,22 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -ms-box-orient: horizontal;
   -webkit-box-direction: reverse;
-      -ms-flex-direction: row-reverse;
-          flex-direction: row-reverse;
+  -moz-box-direction: reverse;
+  -ms-box-direction: reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
   font-size: 16px;
 }
 
 .react-checkbox-tree > ol {
   -webkit-box-flex: 1;
-      -ms-flex: 1 1 auto;
-          flex: 1 1 auto;
+  -moz-box-flex: 1;
+  -ms-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 .react-checkbox-tree ol {
@@ -91,14 +97,18 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -moz-box-align: center;
+  -ms-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .rct-options {
   -webkit-box-flex: 0;
-      -ms-flex: 0 0 auto;
-          flex: 0 0 auto;
+  -moz-box-flex: 0;
+  -ms-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
   margin-left: .5rem;
   text-align: right;
 }

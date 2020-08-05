@@ -1,14 +1,13 @@
 import { reactShinyInput } from 'reactR';
 import React from 'react';
-//import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 import CheckboxTree from 'react-checkbox-tree';
 
 
-function extractValues(nodes){
+function extractValues(nodes) {
   var values = nodes.map(function(node){ return node.value; });
   nodes.forEach(function(node){
     var fields = Object.keys(node);
-    if(fields.indexOf("children") > -1){
+    if(fields.indexOf("children") > -1) {
       values = values.concat(extractValues(node.children));
     }
   });
