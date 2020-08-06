@@ -4,7 +4,6 @@ module.exports = {
     mode: 'development',
     entry: path.join(__dirname, 'srcjs', 'checkboxTree.jsx'),
     output: {
-        path: path.join(__dirname, 'inst', 'www', '${package}', 'checkboxTree'),
         path: path.join(__dirname, 'inst/www/shinyCheckboxTree/checkboxTree'),
         filename: 'checkboxTree.js'
     },

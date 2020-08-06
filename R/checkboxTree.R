@@ -65,7 +65,7 @@ isValidCheckedList <- function(checked){
 }
 
 #' @importFrom rlist list.sort
-
+#' @noRd
 sortNodes <- function(nodes){
   lapply(rlist::list.sort(nodes, `label`), function(node){
     if(is.element("children", names(node))){
@@ -83,8 +83,8 @@ sortNodes <- function(nodes){
 #' @param nodes a list of nodes; each node is a named list with the following
 #' fields:
 #' \describe{
-#'   \item{\code{label}}{node label - required}
-#'   \item{\code{value}}{the value associated to the node - required}
+#'   \item{\code{label}}{node label - \emph{required}}
+#'   \item{\code{value}}{the value associated to the node - \emph{required}}
 #'   \item{\code{children}}{the children of the node, i.e. a list of nodes}
 #'   \item{\code{className}}{a class name to add to the node}
 #'   \item{\code{disabled}}{logical, whether to disable the node}
@@ -99,13 +99,15 @@ sortNodes <- function(nodes){
 #' @param onlyLeafCheckboxes logical, whether checkboxes should be shown only
 #' for the leaves
 #' @param showExpandAll logical; if \code{TRUE}, buttons for expanding and
-#' collapsing all parent nodes will appear in the tree
+#' collapsing all parent nodes will appear in the widget
+#'
+#' @seealso \code{\link{updateCheckboxTreeInput}}
 #'
 #' @importFrom reactR createReactShinyInput
 #' @importFrom htmltools htmlDependency tags
 #' @export
 #'
-#' @examples if(interactive()){
+#' @examples if(interactive()) {
 #'
 #' # make the nodes list from a vector of file paths
 #' makeNodes <- function(leaves){
@@ -205,7 +207,7 @@ checkboxTreeInput <- function(inputId,
     list(
       htmltools::htmlDependency(
         name = "checkboxTree-input",
-        version = "1.0.0",
+        version = "0.1.0",
         src = "www/shinyCheckboxTree/checkboxTree",
         package = "shinyCheckboxTree",
         script = "checkboxTree.js",
@@ -228,7 +230,6 @@ checkboxTreeInput <- function(inputId,
       values = values,
       single = single,
       checkModel = checkModel,
-#      checked = checked,
       onlyLeafCheckboxes = single || onlyLeafCheckboxes,
       showExpandAll = showExpandAll
     ),
@@ -245,26 +246,95 @@ checkboxTreeInput <- function(inputId,
 #' @param checked a list of selected nodes identified by their value
 #'
 #' @export
+#' @examples if(interactive()) {
+#'
+#' library(shiny)
+#' library(shinyCheckboxTree)
+#'
+#' treedata <- list(
+#'   list(
+#'     value = "A",
+#'     label = "Node A",
+#'     title = "Hello, I am node A",
+#'     children = list(
+#'       list(
+#'         value = "Aa",
+#'         label = "Subnode Aa",
+#'         title = "I'm node Aa, a child of node A"
+#'       ),
+#'       list(
+#'         value = "Ab",
+#'         label = "Subnode Ab",
+#'         title = "I'm node Ab, you can't select me since I have no checkbox",
+#'         showCheckbox = FALSE,
+#'         children = list(
+#'           list(
+#'             value = "Ab1",
+#'             label = "Subsubnode Ab1",
+#'             title = "I'm node Ab1, a child of node Ab, and I have no child"
+#'           ),
+#'           list(
+#'             value = "Ab2",
+#'             label = "Subsubnode Ab2",
+#'             title = "I'm node Ab2, I'm red thanks to my CSS class",
+#'             className = "redNode"
+#'           )
+#'         )
+#'       )
+#'     )
+#'   ),
+#'   list(
+#'     value = "B",
+#'     label = "Node B",
+#'     title = "I am node B, I am disabled (so my child is disabled as well)",
+#'     disabled = TRUE,
+#'     children = list(
+#'       list(
+#'         value = "Ba",
+#'         label = "Subnode Ba",
+#'         title = "I'm disabled but you can select me with the 'Update' button"
+#'       )
+#'     )
+#'   )
+#' )
+#'
+#' ui <- fluidPage(
+#'   tags$head(
+#'     tags$style(HTML(".redNode { color: red; }"))
+#'   ),
+#'   br(),
+#'   fluidRow(
+#'     column(
+#'       width = 6,
+#'       checkboxTreeInput("tree", nodes = treedata, checked = list("Ab1"),
+#'                         showExpandAll = TRUE)
+#'     ),
+#'     column(
+#'       width = 6,
+#'       tags$fieldset(
+#'         tags$legend("Selected leaves:"),
+#'         verbatimTextOutput("checkedLeaves")
+#'       )
+#'     )
+#'   ),
+#'   br(),
+#'   actionButton("update", "Update checkbox tree", class = "btn-warning")
+#' )
+#'
+#' server <- function(input, output, session) {
+#'   output[["checkedLeaves"]] <- renderPrint({
+#'     input[["tree"]]
+#'   })
+#'   observeEvent(input[["update"]], {
+#'     updateCheckboxTreeInput(session, "tree",
+#'                             checked = list("Aa", "Ab2", "Ba"))
+#'   })
+#' }
+#'
+#' shinyApp(ui, server)
+#'
+#' }
 updateCheckboxTreeInput <- function(session, inputId, checked){
-  # configuration <- Filter(Negate(is.null), list(
-  #   nodes = nodes,
-  #   checkModel = checkModel,
-  #   checked = checked,
-  #   onlyLeafCheckboxes = onlyLeafCheckboxes,
-  #   showExpandAll = showExpandAll
-  # ))
-  # configuration <- list(
-  #   nodes = nodes,
-  #   checkModel = checkModel,
-  #   checked = checked,
-  #   onlyLeafCheckboxes = onlyLeafCheckboxes,
-  #   showExpandAll = showExpandAll
-  # )
-  # value <- checked
-  # if(length(configuration)){
-  #   session$sendInputMessage(inputId, list(
-  #     value = value))
-  # }
   stopifnot(isValidCheckedList(checked))
-  session$sendInputMessage(inputId, list(value = unique(checked)))
+  session$sendInputMessage(inputId, list(value = unique(as.list(checked))))
 }

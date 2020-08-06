@@ -21,8 +21,8 @@ checkboxTreeInput(
 \item{nodes}{a list of nodes; each node is a named list with the following
 fields:
 \describe{
-  \item{\code{label}}{node label - required}
-  \item{\code{value}}{the value associated to the node - required}
+  \item{\code{label}}{node label - \emph{required}}
+  \item{\code{value}}{the value associated to the node - \emph{required}}
   \item{\code{children}}{the children of the node, i.e. a list of nodes}
   \item{\code{className}}{a class name to add to the node}
   \item{\code{disabled}}{logical, whether to disable the node}
@@ -43,13 +43,13 @@ nodes should be included in the value}
 for the leaves}
 
 \item{showExpandAll}{logical; if \code{TRUE}, buttons for expanding and
-collapsing all parent nodes will appear in the tree}
+collapsing all parent nodes will appear in the widget}
 }
 \description{
 This creates a checkbox tree in the Shiny UI.
 }
 \examples{
-if(interactive()){
+if(interactive()) {
 
 # make the nodes list from a vector of file paths
 makeNodes <- function(leaves){
@@ -118,4 +118,7 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 
 }
+}
+\seealso{
+\code{\link{updateCheckboxTreeInput}}
 }
