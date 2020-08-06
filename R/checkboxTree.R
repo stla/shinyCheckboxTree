@@ -64,6 +64,10 @@ isValidCheckedList <- function(checked){
   valid
 }
 
+#' @importFrom utils globalVariables
+#' @noRd
+utils::globalVariables("label")
+
 #' @importFrom rlist list.sort
 #' @noRd
 sortNodes <- function(nodes){

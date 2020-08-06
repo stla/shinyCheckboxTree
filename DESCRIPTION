@@ -22,5 +22,6 @@ Imports:
     htmltools,
     shiny,
     reactR,
-    rlist
+    rlist,
+    utils
 RoxygenNote: 7.1.1
